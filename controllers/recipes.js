@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Recipe = require("../models/Recipe");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
@@ -26,7 +27,7 @@ const getSingleRecipe = async (req, res) => {
 
 const createRecipe = async (req, res) => {
   req.body.createdBy = req.user.userId;
-  const recipe = Recipe.create(req.body);
+  const recipe = await Recipe.create(req.body);
   res.status(StatusCodes.CREATED).json({ recipe });
 };
 
@@ -57,7 +58,8 @@ const updateRecipe = async (req, res) => {
     }
 
     // Validate ingredients
-    if (!ingredients || ingredients.length === 0) {
+
+    if (!ingredients?.length) {
       throw new BadRequestError("Ingredients cannot be empty");
     }
     for (const ingredient of ingredients) {
@@ -101,7 +103,9 @@ const deleteRecipe = async (req, res) => {
     user: { userId },
     params: { id: recipeId },
   } = req;
-
+  if (!mongoose.isValidObjectId(recipeId)) {
+    throw new NotFoundError(`No recipe found with ID: ${recipeId}`);
+  }
   const recipe = await Recipe.findByIdAndRemove({
     _id: recipeId,
     createdBy: userId,
@@ -109,7 +113,7 @@ const deleteRecipe = async (req, res) => {
   if (!recipe) {
     throw new NotFoundError(`No recipe found with ID: ${recipeId}`);
   }
-  res.status(StatusCodes.OK).send();
+  res.status(StatusCodes.OK).send(`Sucessfully deleted ${recipe.recipeName}`);
 };
 
 module.exports = {

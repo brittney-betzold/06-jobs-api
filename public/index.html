@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Management</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+
+<body>
+    <div id="auth-section">
+        <form id="login-form">
+            <h2>Login</h2>
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button type="submit" id="login-button">Login</button>
+        </form>
+
+
+        <form id="register-form">
+            <h2>Register</h2>
+            <input type="text" id="register-name" placeholder="Name" required>
+            <input type="email" id="register-email" placeholder="Email" required>
+            <input type="password" id="register-password1" placeholder="Password" required>
+            <input type="password" id="register-password2" placeholder="Confirm Password" required>
+            <button type="submit" id="register-button">Register</button>
+            <button type="button" id="register-cancel">Cancel</button>
+        </form>
+    </div>
+
+
+    <div id="recipe-section" style="display: none;">
+        <h1>Recipes</h1>
+
+        <!-- Create Recipe Button -->
+        <button id="create-recipe-button">Create Recipe</button>
+
+        <!-- Recipes List -->
+        <ul id="recipe-list"></ul>
+
+        <!-- Recipe Form for adding or editing recipes -->
+        <form id="recipe-form" style="display: none;">
+            <h3 id="recipe-form-title">Add Recipe</h3>
+            <input type="text" id="recipe-name" placeholder="Recipe Name" required>
+            <textarea id="recipe-ingredients" placeholder="Ingredients" required></textarea>
+            <textarea id="recipe-instructions" placeholder="Instructions" required></textarea>
+            <input type="number" id="cooking-time" placeholder="Cooking Time" required>
+            <input type="number" id="serving-size" placeholder="Serving Size" required>
+            <select id="recipe-category" required>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="dessert">Dessert</option>
+            </select>
+            <button type="submit">Save Recipe</button>
+            <button type="button" id="cancel-recipe-button">Cancel</button>
+        </form>
+
+        <!-- Logout Button -->
+        <button id="logout-button">Logout</button>
+    </div>
+
+    <!-- Include the main JavaScript file -->
+    <script src="index.js" type="module"></script>
+</body>
+
+</html>

@@ -1,38 +1,117 @@
-/* Basic styles for the application */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 20px;
+    background-color: #f7f9fc;
+    
+}
+.header{
+    background-size: cover;
+    width:100%;
 }
 
-/* Styling for forms */
+h1 , h2 {
+    color: #333;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
 form {
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-    margin: auto;
+    margin: 20px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-input, textarea, button, select {
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:grey
+}
+
+input,
+textarea,
+select {
+    margin-left:20%;
+    margin-right:20%;
+    width: 60%;
     padding: 8px;
-    margin: 8px 0;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
-
 button {
-    background-color: #4CAF50;
+    background-color: #007bff;
     color: white;
-    border: none;
     padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    margin-right: 10px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
+}
+#recipe-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#recipes-header{
+    width: 100px;
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
-    form {
-        width: 90%;
-    }
+#recipe-list li {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#recipe-list li:hover {
+    background-color: #f0f0f0;
+}
+#recipes-header th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+#recipe-list th {
+    padding: 10px; 
+    text-align: left; 
+}
+
+#recipe-list th:nth-child(1) {
+    width: 15%; 
+}
+
+#recipe-list th:nth-child(2) {
+    width: 20%;
+}
+
+#recipe-list th:nth-child(3) {
+    width: 15%; 
+}
+
+#recipe-list th:nth-child(4) {
+    width: 15%; 
+}
+
+#recipe-list th:nth-child(5) {
+    width: 10%; 
+}
+
+#recipe-list th:nth-child(6) {
+    width: 15%; 
 }

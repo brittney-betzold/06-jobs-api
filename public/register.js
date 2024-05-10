@@ -2,7 +2,6 @@ import {
   inputEnabled,
   setDiv,
   message,
-  token,
   enableInput,
   setToken,
 } from "./index.js";
@@ -17,28 +16,62 @@ let password1 = null;
 let password2 = null;
 
 export const handleRegister = () => {
-  // Initialize the register div and input fields
-  registerDiv = document.getElementById("register-form");
-  name = document.getElementById("register-name");
-  email1 = document.getElementById("register-email");
-  password1 = document.getElementById("register-password");
-  password2 = document.getElementById("register-password2");
-  // Get references to register and cancel buttons
-  const registerButton = document.getElementById("register-button");
-  const registerCancel = document.getElementById("cancel-recipe-button");
+  registerDiv = document.getElementById("register-div");
+  name = document.getElementById("name");
+  email1 = document.getElementById("email1");
+  password1 = document.getElementById("password1");
+  password2 = document.getElementById("password2");
 
-  // Add click event listener to the register form
-  registerDiv.addEventListener("click", (e) => {
-    // Check if input is enabled and the target is a button
+  const registerButton = document.getElementById("register-button");
+  const registerCancel = document.getElementById("register-cancel");
+
+  registerDiv.addEventListener("click", async (e) => {
     if (inputEnabled && e.target.nodeName === "BUTTON") {
       if (e.target === registerButton) {
-        // Handle registration logic here (e.g., sending a request to the server)
+        if (password1.value != password2.value) {
+          message.textContent = "The passwords entered do not match.";
+        } else {
+          enableInput(false);
 
-        // For now, let's just assume registration is successful
-        // and show the recipes section
-        showRecipes();
+          try {
+            const response = await fetch("/api/v1/auth/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: name.value,
+                email: email1.value,
+                password: password1.value,
+              }),
+            });
+
+            const data = await response.json();
+            if (response.status === 201) {
+              message.textContent = `Registration successful.  Welcome ${data.user.name}`;
+              setToken(data.token);
+
+              name.value = "";
+              email1.value = "";
+              password1.value = "";
+              password2.value = "";
+
+              showRecipes();
+            } else {
+              message.textContent = data.msg;
+            }
+          } catch (err) {
+            console.error(err);
+            message.textContent = "A communications error occurred.";
+          }
+
+          enableInput(true);
+        }
       } else if (e.target === registerCancel) {
-        // If cancel button is clicked, show the login and register section
+        name.value = "";
+        email1.value = "";
+        password1.value = "";
+        password2.value = "";
         showLoginRegister();
       }
     }
@@ -46,12 +79,10 @@ export const handleRegister = () => {
 };
 
 export const showRegister = () => {
-  // Reset the input fields
   name.value = "";
   email1.value = "";
   password1.value = "";
   password2.value = "";
 
-  // Show the registration form
   setDiv(registerDiv);
 };

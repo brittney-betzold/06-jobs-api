@@ -1,24 +1,19 @@
 import { inputEnabled, setDiv } from "./index.js";
 import { showLogin } from "./login.js";
 import { showRegister } from "./register.js";
+
 let loginRegisterDiv = null;
+
 export const handleLoginRegister = () => {
-  // Initialize login and register div
-  loginRegisterDiv = document.getElementById("auth-section");
-
-  // Get references to login and register buttons
-  const loginButton = document.getElementById("login-button");
-  const registerButton = document.getElementById("register-button");
-
-  // Add click event listener to the auth section
+  loginRegisterDiv = document.getElementById("logon-register");
   loginRegisterDiv.addEventListener("click", (e) => {
-    // Check if input is enabled and the target is a button
+    const logon = document.getElementById("logon");
+    const register = document.getElementById("register");
+
     if (inputEnabled && e.target.nodeName === "BUTTON") {
-      if (e.target === loginButton) {
-        // If login button is clicked, show login form
+      if (e.target === logon) {
         showLogin();
-      } else if (e.target === registerButton) {
-        // If register button is clicked, show register form
+      } else if (e.target === register) {
         showRegister();
       }
     }

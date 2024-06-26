@@ -39,7 +39,8 @@ export const handleLogin = () => {
 
           const data = await response.json();
           if (response.status === 200) {
-            message.textContent = `Logon successful.  Welcome ${data.user.name}`;
+            message.textContent = `Logon successful. Welcome ${data.user.name}`;
+            message.classList.add("logon-message"); // Add this line to apply the class
             setToken(data.token);
 
             email.value = "";
@@ -48,10 +49,12 @@ export const handleLogin = () => {
             showRecipes();
           } else {
             message.textContent = data.msg;
+            message.classList.remove("logon-message"); // Remove the class if logon is not successful
           }
         } catch (err) {
           console.error(err);
           message.textContent = "A communications error occurred.";
+          message.classList.remove("logon-message"); // Remove the class if an error occurs
         }
 
         enableInput(true);

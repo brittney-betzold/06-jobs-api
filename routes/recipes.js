@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const {
   getAllRecipes,
   getSingleRecipe,
@@ -9,12 +8,17 @@ const {
   deleteRecipe,
 } = require("../controllers/recipes");
 
-router.route("/").post(createRecipe).get(getAllRecipes);
+// Route for creating a new recipe
+router.route("/").post(createRecipe);
 
+// Route for getting all recipes with optional search query
+router.get("/", getAllRecipes);
+
+// Route for getting a single recipe, updating, or deleting it
 router
   .route("/:id")
   .get(getSingleRecipe)
-  .delete(deleteRecipe)
-  .patch(updateRecipe);
+  .patch(updateRecipe)
+  .delete(deleteRecipe);
 
 module.exports = router;

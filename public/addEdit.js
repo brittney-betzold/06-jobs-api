@@ -1,29 +1,18 @@
 import { enableInput, inputEnabled, message, setDiv, token } from "./index.js";
 import { showRecipes } from "./recipes.js";
 
-let addEditDiv = null;
-let recipeName = null;
-let instructions = null;
-let cookingTime = null;
-let servingSize = null;
-let category = null;
-let saveRecipe = null;
-let cancelRecipe = null;
-let addIngredientButton = null;
-let ingredientFields = null;
+let addEditDiv = document.getElementById("add-edit-recipe");
+let recipeName = document.getElementById("recipe-name");
+let instructions = document.getElementById("instructions");
+let cookingTime = document.getElementById("cooking-time");
+let servingSize = document.getElementById("serving-size");
+let category = document.getElementById("category");
+let saveRecipe = document.getElementById("save-recipe");
+let cancelRecipe = document.getElementById("cancel-recipe");
+let addIngredientButton = document.getElementById("add-ingredient-button");
+let ingredientFields = document.getElementById("ingredient-fields");
 
 export const handleAddEdit = () => {
-  addEditDiv = document.getElementById("add-edit-recipe");
-  recipeName = document.getElementById("recipe-name");
-  instructions = document.getElementById("instructions");
-  cookingTime = document.getElementById("cooking-time");
-  servingSize = document.getElementById("serving-size");
-  category = document.getElementById("category");
-  saveRecipe = document.getElementById("save-recipe");
-  cancelRecipe = document.getElementById("cancel-recipe");
-  addIngredientButton = document.getElementById("add-ingredient-button");
-  ingredientFields = document.getElementById("ingredient-fields");
-
   addIngredientButton.addEventListener("click", () => {
     const newIngredientRow = document.createElement("div");
     newIngredientRow.className = "ingredient-row";

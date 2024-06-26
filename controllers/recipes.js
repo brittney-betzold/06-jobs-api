@@ -4,10 +4,24 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const getAllRecipes = async (req, res) => {
-  const recipes = await Recipe.find({ createdBy: req.user.userId }).sort(
-    "createdAt"
-  );
-  res.status(StatusCodes.OK).json({ recipes, count: recipes.length });
+  try {
+    const userId = req.user.userId; // Assuming userId is available in req.user after authentication
+    let query = { createdBy: userId };
+
+    // Check if search query is provided
+    const { search } = req.query;
+    if (search) {
+      query.recipeName = { $regex: search, $options: "i" }; // Case-insensitive search for recipeName
+    }
+
+    const recipes = await Recipe.find(query).sort("createdAt");
+    res.status(StatusCodes.OK).json({ recipes, count: recipes.length });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server Error" });
+  }
 };
 
 const getSingleRecipe = async (req, res) => {
@@ -115,6 +129,46 @@ const deleteRecipe = async (req, res) => {
   }
   res.status(StatusCodes.OK).send(`Sucessfully deleted ${recipe.recipeName}`);
 };
+// recipes.js
+
+// Import necessary variables and functions if needed
+
+// Define the searchRecipes function
+const searchRecipes = async (searchQuery) => {
+  try {
+    const response = await fetch(
+      `/api/v1/recipes?search=${encodeURIComponent(searchQuery)}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      // Update the recipe list with search results
+      let children = [];
+      data.recipes.forEach((recipe) => {
+        // Create rows for each recipe found in search
+        const rowEntry = document.createElement("tr");
+        // Populate row cells with recipe details (similar to showRecipes function)
+        // ...
+        children.push(rowEntry);
+      });
+      recipeList.replaceChildren(...children);
+      message.textContent = `${data.recipes.length} recipes found.`;
+    } else {
+      message.textContent = data.msg;
+    }
+  } catch (error) {
+    console.error("Error searching recipes:", error);
+    message.textContent = "Error: Failed to search recipes.";
+  }
+};
+
+// Ensure the function is exported if needed
 
 module.exports = {
   getAllRecipes,
@@ -122,4 +176,5 @@ module.exports = {
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  searchRecipes,
 };
